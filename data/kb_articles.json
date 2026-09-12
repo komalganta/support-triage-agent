@@ -1,0 +1,37 @@
+[
+  {
+    "title": "How to update your payment method",
+    "category": "billing",
+    "content": "Go to Settings > Billing > Payment Methods. Click 'Add Payment Method', enter your new card details, and set it as default. Your next invoice will use the new card automatically."
+  },
+  {
+    "title": "Understanding duplicate charges",
+    "category": "billing",
+    "content": "Duplicate charges usually happen when a payment retry overlaps with a successful charge. If you see two charges for the same billing period, contact support with both transaction IDs and we will refund the duplicate within 3-5 business days."
+  },
+  {
+    "title": "Fixing CSV export failures",
+    "category": "bug_report",
+    "content": "Export failures are most often caused by browser extensions blocking downloads, or exports exceeding 50,000 rows. Try disabling ad blockers or filtering your export to a smaller date range."
+  },
+  {
+    "title": "Mobile app crash troubleshooting",
+    "category": "bug_report",
+    "content": "If the app crashes on a specific screen, try: (1) force-closing and reopening the app, (2) updating to the latest version, (3) clearing the app cache in your device settings. Persistent crashes should be reported with your device model and OS version."
+  },
+  {
+    "title": "Requesting new features",
+    "category": "feature_request",
+    "content": "We track feature requests through our public roadmap board. Submitting a request there lets other customers upvote it, which directly influences our prioritization."
+  },
+  {
+    "title": "Account locked: common causes",
+    "category": "account_access",
+    "content": "Accounts are automatically locked after multiple failed login attempts, or if suspicious activity is detected. Locked accounts can be restored by verifying your identity via the emailed unlock link."
+  },
+  {
+    "title": "Resetting a forgotten password",
+    "category": "account_access",
+    "content": "Password reset emails can take up to 10 minutes to arrive and may land in spam. If no email arrives after 15 minutes, confirm the email on file is correct, or contact support to trigger a manual reset."
+  }
+]
