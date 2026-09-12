@@ -3,8 +3,7 @@ import os
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 from src.kb import load_kb_articles, get_vectorstore, retrieve as kb_retrieve
-
-from src.schemas import TicketClassification, TicketState
+from src.schemas import DraftReply, TicketClassification, TicketState
 
 load_dotenv()
 
@@ -32,3 +31,32 @@ Assign a category, an urgency level, and a one-sentence reasoning for your choic
 def retrieve_node(state: TicketState) -> dict:
     articles = kb_retrieve(vectorstore, state["ticket_text"], k=3)
     return {"retrieved_articles": articles}
+
+def draft_node(state: TicketState) -> dict:
+    structured_llm = llm.with_structured_output(DraftReply)
+
+    articles_text = "\n\n".join(
+        f"Article: {a.title}\n{a.content}" for a in state["retrieved_articles"]
+    )
+
+    prompt = f"""You are drafting a reply to a customer support ticket.
+
+Ticket: {state["ticket_text"]}
+
+Here are the most relevant help-center articles we found (they may or may not
+actually be relevant to this specific ticket):
+
+{articles_text}
+
+Write a reply to the customer based ONLY on the information in these articles.
+If none of the articles actually address the customer's issue, say so honestly
+in your reply instead of making something up, and reflect that with a low
+confidence score.
+
+Also report:
+- confidence (0-1): how confident you are that this reply is accurate and
+  fully grounded in the articles above
+- grounded_in: titles of the articles you actually used"""
+
+    draft = structured_llm.invoke(prompt)
+    return {"draft": draft}
