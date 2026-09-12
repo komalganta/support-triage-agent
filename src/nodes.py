@@ -22,10 +22,20 @@ def classify_node(state: TicketState) -> dict:
 
 Ticket: {state["ticket_text"]}
 
-Assign a category, an urgency level, and a one-sentence reasoning for your choices."""
+Assign a category, an urgency level, and a one-sentence reasoning for your choices.
+
+Urgency guidelines:
+- high: customer is fully blocked (can't log in, can't pay, data loss), explicit
+  urgency language ("urgent", "ASAP"), or a security/financial risk
+- medium: a real problem, but the customer has a workaround or isn't fully blocked
+  (e.g. a specific feature misbehaving while the rest of the product works)
+- low: cosmetic issues, feature requests, or general questions with no real
+  time pressure
+
+A broken feature is not automatically "high" — only mark high if the customer
+is genuinely blocked or there's explicit time pressure."""
 
     classification = structured_llm.invoke(prompt)
-
     return {"classification": classification}
 
 def retrieve_node(state: TicketState) -> dict:
