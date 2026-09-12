@@ -60,3 +60,26 @@ Also report:
 
     draft = structured_llm.invoke(prompt)
     return {"draft": draft}
+
+CONFIDENCE_THRESHOLD = 0.7
+
+def route_node(state: TicketState) -> dict:
+    urgency = state["classification"].urgency
+    confidence = state["draft"].confidence
+
+    if urgency == "high":
+        return {
+            "routing_decision": "escalate",
+            "routing_reason": "High urgency ticket routed to human review.",
+        }
+
+    if confidence < CONFIDENCE_THRESHOLD:
+        return {
+            "routing_decision": "escalate",
+            "routing_reason": f"Low draft confidence ({confidence:.2f}) below threshold ({CONFIDENCE_THRESHOLD}).",
+        }
+
+    return {
+        "routing_decision": "auto_send",
+        "routing_reason": f"High confidence ({confidence:.2f}) and non-urgent; safe to auto-send.",
+    }
