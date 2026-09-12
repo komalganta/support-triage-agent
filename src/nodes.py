@@ -83,3 +83,12 @@ def route_node(state: TicketState) -> dict:
         "routing_decision": "auto_send",
         "routing_reason": f"High confidence ({confidence:.2f}) and non-urgent; safe to auto-send.",
     }
+
+def send_node(state: TicketState) -> dict:
+    print(f"[AUTO-SEND] Reply sent to customer:\n{state['draft'].reply_text}")
+    return {}
+
+
+def escalate_node(state: TicketState) -> dict:
+    print(f"[ESCALATED] {state['routing_reason']}\nDraft for human reviewer:\n{state['draft'].reply_text}")
+    return {}
