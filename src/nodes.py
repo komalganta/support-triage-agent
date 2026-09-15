@@ -1,7 +1,10 @@
 import os
 
 from dotenv import load_dotenv
+from groq import RateLimitError
 from langchain_groq import ChatGroq
+from tenacity import retry, stop_after_attempt, wait_exponential
+
 from src.kb import load_kb_articles, get_vectorstore, retrieve as kb_retrieve
 from src.schemas import DraftReply, TicketClassification, TicketState
 
@@ -12,8 +15,28 @@ llm = ChatGroq(
     temperature=0,
     api_key=os.environ.get("GROQ_API_KEY"),
 )
+
 _articles = load_kb_articles()
 vectorstore = get_vectorstore(_articles)
+
+CONFIDENCE_THRESHOLD = 0.7
+
+
+@retry(
+    retry=lambda retry_state: isinstance(retry_state.outcome.exception(), RateLimitError),
+    stop=stop_after_attempt(5),
+    wait=wait_exponential(multiplier=1, min=2, max=30),
+)
+def invoke_with_retry(structured_llm, prompt):
+    """Calls the LLM, automatically retrying with backoff if we hit a rate limit.
+
+    Groq's free tier caps tokens-per-minute. Running a batch of tickets back
+    to back can hit that ceiling mid-run. Instead of crashing the whole batch,
+    this waits (2s, then roughly doubling up to 30s) and retries, up to 5
+    attempts, before giving up.
+    """
+    return structured_llm.invoke(prompt)
+
 
 def classify_node(state: TicketState) -> dict:
     structured_llm = llm.with_structured_output(TicketClassification)
@@ -35,12 +58,14 @@ Urgency guidelines:
 A broken feature is not automatically "high" — only mark high if the customer
 is genuinely blocked or there's explicit time pressure."""
 
-    classification = structured_llm.invoke(prompt)
+    classification = invoke_with_retry(structured_llm, prompt)
     return {"classification": classification}
+
 
 def retrieve_node(state: TicketState) -> dict:
     articles = kb_retrieve(vectorstore, state["ticket_text"], k=3)
     return {"retrieved_articles": articles}
+
 
 def draft_node(state: TicketState) -> dict:
     structured_llm = llm.with_structured_output(DraftReply)
@@ -68,10 +93,9 @@ Also report:
   fully grounded in the articles above
 - grounded_in: titles of the articles you actually used"""
 
-    draft = structured_llm.invoke(prompt)
+    draft = invoke_with_retry(structured_llm, prompt)
     return {"draft": draft}
 
-CONFIDENCE_THRESHOLD = 0.7
 
 def route_node(state: TicketState) -> dict:
     urgency = state["classification"].urgency
@@ -93,6 +117,7 @@ def route_node(state: TicketState) -> dict:
         "routing_decision": "auto_send",
         "routing_reason": f"High confidence ({confidence:.2f}) and non-urgent; safe to auto-send.",
     }
+
 
 def send_node(state: TicketState) -> dict:
     print(f"[AUTO-SEND] Reply sent to customer:\n{state['draft'].reply_text}")

@@ -10,6 +10,31 @@
     "content": "Duplicate charges usually happen when a payment retry overlaps with a successful charge. If you see two charges for the same billing period, contact support with both transaction IDs and we will refund the duplicate within 3-5 business days."
   },
   {
+    "title": "Switching between monthly and annual billing",
+    "category": "billing",
+    "content": "You can switch your billing cycle in Settings > Billing > Plan. Switching to annual applies a prorated credit for unused monthly time. If you were billed for the wrong cycle, support can manually correct the charge."
+  },
+  {
+    "title": "Adding additional seats to your plan",
+    "category": "billing",
+    "content": "Extra seats can be added from Settings > Team > Add Member. Each additional seat is billed at your plan's per-seat rate, prorated for the current billing period."
+  },
+  {
+    "title": "Understanding your invoice line items",
+    "category": "billing",
+    "content": "Each invoice breaks down base plan cost, seat add-ons, usage overages, and any applicable tax. A full itemized breakdown is available under Settings > Billing > Invoice History, downloadable as a PDF."
+  },
+  {
+    "title": "Requesting a refund",
+    "category": "billing",
+    "content": "Refund requests are evaluated case by case. Annual plans are eligible for a prorated refund within 30 days of purchase. Monthly plans are generally non-refundable but exceptions can be reviewed by our billing team."
+  },
+  {
+    "title": "Applying a promo code or discount",
+    "category": "billing",
+    "content": "Promo codes can be applied at checkout or later under Settings > Billing > Promo Code. Codes typically apply to the next billing cycle and cannot be combined with other active discounts."
+  },
+  {
     "title": "Fixing CSV export failures",
     "category": "bug_report",
     "content": "Export failures are most often caused by browser extensions blocking downloads, or exports exceeding 50,000 rows. Try disabling ad blockers or filtering your export to a smaller date range."
@@ -20,9 +45,54 @@
     "content": "If the app crashes on a specific screen, try: (1) force-closing and reopening the app, (2) updating to the latest version, (3) clearing the app cache in your device settings. Persistent crashes should be reported with your device model and OS version."
   },
   {
+    "title": "Search returning incomplete results",
+    "category": "bug_report",
+    "content": "Search indexes update on a short delay after new items are created. If results are missing, wait a few minutes and retry. Items in archived or restricted folders are excluded from default search."
+  },
+  {
+    "title": "Integration troubleshooting: Slack",
+    "category": "bug_report",
+    "content": "If Slack notifications stop posting, check that the integration token hasn't expired under Settings > Integrations > Slack. Reauthorizing the connection resolves most silent failures."
+  },
+  {
+    "title": "Dashboard charts not loading",
+    "category": "bug_report",
+    "content": "Chart rendering issues are usually caused by an outdated browser or a corrupted local cache. Try a hard refresh (Ctrl+Shift+R or Cmd+Shift+R) or switching to an up-to-date version of Chrome or Firefox."
+  },
+  {
+    "title": "File uploads stuck at 0%",
+    "category": "bug_report",
+    "content": "Uploads that never start are typically blocked by a corporate firewall or VPN restricting large file transfers. Try uploading from a different network, or contact your IT team about allowlisting our upload domain."
+  },
+  {
+    "title": "Notifications arriving late or not at all",
+    "category": "bug_report",
+    "content": "Delayed notifications are usually a mobile OS battery-optimization setting limiting background activity. Check that the app is excluded from battery optimization in your device settings, and that notification permissions are enabled."
+  },
+  {
     "title": "Requesting new features",
     "category": "feature_request",
     "content": "We track feature requests through our public roadmap board. Submitting a request there lets other customers upvote it, which directly influences our prioritization."
+  },
+  {
+    "title": "API access for usage statistics",
+    "category": "feature_request",
+    "content": "Programmatic access to usage stats is available via the /api/v1/usage endpoint on Business and Enterprise plans. API keys can be generated under Settings > Developer."
+  },
+  {
+    "title": "Requesting a custom integration",
+    "category": "feature_request",
+    "content": "Custom integrations outside our existing catalog can be scoped by our partnerships team. Submit details of the desired integration through the Enterprise contact form, and a specialist will follow up within 3-5 business days."
+  },
+  {
+    "title": "Suggesting UI or accessibility improvements",
+    "category": "feature_request",
+    "content": "Accessibility and UI suggestions are reviewed by our design team on a rolling basis. Submitting through the roadmap board with a specific description of the pain point helps us prioritize accordingly."
+  },
+  {
+    "title": "Requesting a data export or backup schedule",
+    "category": "feature_request",
+    "content": "Scheduled automatic exports aren't currently available, but manual exports can be run anytime from Settings > Data > Export. Automated scheduled exports are on our roadmap; upvote the related roadmap item to help prioritize it."
   },
   {
     "title": "Account locked: common causes",
@@ -33,5 +103,25 @@
     "title": "Resetting a forgotten password",
     "category": "account_access",
     "content": "Password reset emails can take up to 10 minutes to arrive and may land in spam. If no email arrives after 15 minutes, confirm the email on file is correct, or contact support to trigger a manual reset."
+  },
+  {
+    "title": "Reporting suspicious account activity",
+    "category": "account_access",
+    "content": "If you notice unrecognized logins, immediately change your password and enable two-factor authentication under Settings > Security. Support can also review recent login history and force-terminate active sessions on request."
+  },
+  {
+    "title": "Requesting full account and data deletion",
+    "category": "account_access",
+    "content": "Full account deletion, including all associated data, can be requested under Settings > Account > Delete Account, or by contacting support directly. Deletion requests are processed within the timeframe required by applicable data protection regulations and cannot be reversed once completed."
+  },
+  {
+    "title": "Setting up two-factor authentication",
+    "category": "account_access",
+    "content": "Two-factor authentication can be enabled under Settings > Security > Two-Factor Auth. We support authenticator apps (TOTP) and SMS codes. We recommend an authenticator app for better reliability."
+  },
+  {
+    "title": "Transferring account ownership",
+    "category": "account_access",
+    "content": "Account ownership can be transferred to another team member under Settings > Team > Transfer Ownership. The new owner must accept the transfer via an emailed confirmation link before it takes effect."
   }
 ]
